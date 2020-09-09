@@ -9,11 +9,13 @@ print(wb.sheetnames)
 
 sheet1 = wb["Circle 6"]
 
-update_date = "Date: " + str(date.today())
+today = date.today().strftime("%d-%m-%Y")
+
+update_date = "Date: " + str(today)
 
 print("Updating Date: {}".format(update_date))
 
-(sheet1["K2"].value) = update_date
+#(sheet1["K2"].value) = update_date
 
-wb.save("4-08-2020 (2).xlsx")
+#wb.save("4-08-2020 (2).xlsx")
 
