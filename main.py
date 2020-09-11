@@ -6,14 +6,16 @@ from api import EditAPI
 from api import SelectCircles
 from api import IndividualEdit
 from kivy.app import App
-from kivy.uix.button import Button
-from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import Screen, ScreenManager
+from kivy.core.window import Window
 
 
 #TODO: Add this inside the API
 # Loading the workbook from the current directory
 workbook = load_workbook(os.path.join(os.getcwd(), "4-08-2020 (2).xlsx"))
+
+Window.clearcolor = (135/255,206/255,235/255,1)
+Window.size = (360, 600)
 
 class ReportGenerator(App):
     def __init__(self, **kwargs):

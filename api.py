@@ -34,28 +34,32 @@ class SelectCircles(GridLayout):
         super().__init__()
         self.screen_manager = screen_manager
         self.cols = 1
-        self.add_widget(Label(text = "Click on any Circle to edit"))
-        self.circle_6 = Button(text = "Circle 6")
+        self.spacing = 10
+        self.padding = 40
+        self.add_widget(Label(text="TAP BELOW TO EDIT YOUR CIRCLE",
+                                color=(0,0,0,1), font_size="20sp", bold=True))
+        
+        self.circle_6 = Button(text = "Circle 6", size_hint=(0.5,0.5), font_size="20sp", background_color=(177/255, 126/255, 5/255, 1))
         self.circle_6.bind(on_press = self.clicked)
         self.add_widget(self.circle_6)
 
-        self.circle_7 = Button(text = "Circle 7")
+        self.circle_7 = Button(text = "Circle 7", size_hint=(0.5,0.5), font_size="20sp", background_color=(177/255, 126/255, 5/255, 1))
         self.circle_7.bind(on_press = self.clicked)
         self.add_widget(self.circle_7)
 
-        self.circle_8 = Button(text = "Circle 8")
+        self.circle_8 = Button(text = "Circle 8", size_hint=(0.5,0.5), font_size="20sp", background_color=(177/255, 126/255, 5/255, 1))
         self.circle_8.bind(on_press = self.clicked)
         self.add_widget(self.circle_8)
 
-        self.circle_9 = Button(text = "Circle 9")
+        self.circle_9 = Button(text = "Circle 9", size_hint=(0.5,0.5), font_size="20sp", background_color=(177/255, 126/255, 5/255, 1))
         self.circle_9.bind(on_press = self.clicked)
         self.add_widget(self.circle_9)
 
-        self.circle_10 = Button(text = "Circle 10")
+        self.circle_10 = Button(text = "Circle 10", size_hint=(0.5,0.5), font_size="20sp", background_color=(177/255, 126/255, 5/255, 1))
         self.circle_10.bind(on_press = self.clicked)
         self.add_widget(self.circle_10)
 
-        self.circle_11 = Button(text = "Circle 11")
+        self.circle_11 = Button(text = "Circle 11", size_hint=(0.5,0.5), font_size="20sp", background_color=(177/255, 126/255, 5/255, 1))
         self.circle_11.bind(on_press = self.clicked)
         self.add_widget(self.circle_11)
     
