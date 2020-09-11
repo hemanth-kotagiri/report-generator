@@ -12,8 +12,20 @@ class IndividualEdit(GridLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.cols = 2
-        self.add_widget(Label(text = "Type Something"))
-        self.add_widget(TextInput(multiline = False))
+
+        # Initializing all the sheets
+
+        self.sheet6_editor = EditAPI("4-08-2020 (2).xlsx", "Circle 6")
+        self.sheet7_editor = EditAPI("4-08-2020 (2).xlsx", "Circle 7")
+        self.sheet8_editor = EditAPI("4-08-2020 (2).xlsx", "Circle 8")
+        self.sheet9_editor = EditAPI("4-08-2020 (2).xlsx", "Circle 9")
+        self.sheet10_editor = EditAPI("4-08-2020 (2).xlsx", "Circle 10")
+        self.sheet11_editor = EditAPI("4-08-2020 (2).xlsx", "Circle 11")
+
+        # Updating date for sheet 6
+        b = Button(text = "Update Date")
+        b.bind(on_press = self.sheet6_editor.update_date)
+        self.add_widget(b)
 
 
 class SelectCircles(GridLayout):
