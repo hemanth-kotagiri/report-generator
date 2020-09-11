@@ -5,20 +5,51 @@ from openpyxl import load_workbook
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
+from kivy.uix.textinput import TextInput
+
+class IndividualEdit(GridLayout):
+    """ The next page to edit individual sheets """
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.cols = 2
+        self.add_widget(Label(text = "Type Something"))
+        self.add_widget(TextInput(multiline = False))
 
 
 class SelectCircles(GridLayout):
-    def __init__(self, **kwargs):
+    def __init__(self, screen_manager, *kwargs):
         """ Opening Page of the App """
-        super().__init__(**kwargs)
+        super().__init__()
+        self.screen_manager = screen_manager
         self.cols = 1
         self.add_widget(Label(text = "Click on any Circle to edit"))
-        self.add_widget(Button(text = "Circle 6"))
-        self.add_widget(Button(text = "Circle 7"))
-        self.add_widget(Button(text = "Circle 8"))
-        self.add_widget(Button(text = "Circle 9"))
-        self.add_widget(Button(text = "Circle 10"))
-        self.add_widget(Button(text = "Circle 11"))
+        self.circle_6 = Button(text = "Circle 6")
+        self.circle_6.bind(on_press = self.clicked)
+        self.add_widget(self.circle_6)
+
+        self.circle_7 = Button(text = "Circle 7")
+        self.circle_7.bind(on_press = self.clicked)
+        self.add_widget(self.circle_7)
+
+        self.circle_8 = Button(text = "Circle 8")
+        self.circle_8.bind(on_press = self.clicked)
+        self.add_widget(self.circle_8)
+
+        self.circle_9 = Button(text = "Circle 9")
+        self.circle_9.bind(on_press = self.clicked)
+        self.add_widget(self.circle_9)
+
+        self.circle_10 = Button(text = "Circle 10")
+        self.circle_10.bind(on_press = self.clicked)
+        self.add_widget(self.circle_10)
+
+        self.circle_11 = Button(text = "Circle 11")
+        self.circle_11.bind(on_press = self.clicked)
+        self.add_widget(self.circle_11)
+    
+    def clicked(self, instance):
+        logging.info("GOING TO THE INDIVIDUAL CIRCLE EDITOR")
+        self.screen_manager.current = "Next Page"
 
 
 class EditAPI:
