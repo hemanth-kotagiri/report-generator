@@ -1,21 +1,39 @@
+import logging
+from datetime import time
 from datetime import date
 from openpyxl import load_workbook
 
-#Updating the cell data in circle 6 sheet
+#TODO: Add updated state in update_data method
 
-wb = load_workbook("4-08-2020 (2).xlsx")
+class EditAPI:
+    """ This contains all the functions to edit a cell in a sheet """
 
-print(wb.sheetnames)
+    def __init__(self, workbook_name, sheet_name):
+        self.workbook_name = workbook_name
+        self.workbook = load_workbook(workbook_name)
+        self.sheet = self.workbook[sheet_name]
+        logging.info("Workbook loaded successfully")
 
-sheet1 = wb["Circle 6"]
 
-today = date.today().strftime("%d-%m-%Y")
+    def update_date(self, instance):
+        """ Updates the date in a given sheet of the workbook """
 
-update_date = "Date: " + str(today)
+        today = date.today().strftime("%d-%m-%Y")
+        update_date = "Date: " + str(today)
+        logging.info("Updating Date: {}".format(update_date))
+        self.sheet["K2"].value = update_date
+        logging.info("DATE UPDATED SUCCESSFULLY")
+        print("Updated")
+        self.workbook.save(self.workbook_name)
 
-print("Updating Date: {}".format(update_date))
 
-#(sheet1["K2"].value) = update_date
 
-#wb.save("4-08-2020 (2).xlsx")
+
+
+
+
+
+
+
+
 
