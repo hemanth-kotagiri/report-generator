@@ -22,7 +22,7 @@ class IndividualEdit(GridLayout):
         self.sheet10_editor = EditAPI("4-08-2020 (2).xlsx", "Circle 10")
         self.sheet11_editor = EditAPI("4-08-2020 (2).xlsx", "Circle 11")
 
-        sheet_editors = {
+        self.sheet_editors = {
             "Circle 6": self.sheet6_editor,
             "Circle 7": self.sheet7_editor,
             "Circle 8": self.sheet8_editor,
@@ -33,8 +33,11 @@ class IndividualEdit(GridLayout):
 
         # Updating date for sheet 6
         b = Button(text = "Update Date")
-        b.bind(on_press = self.sheet6_editor.update_date)
+        b.bind(on_press = self.update_date)
         self.add_widget(b)
+    
+    def update_date(self, instance):
+        self.sheet_editors[root.circle].update_date(instance)
 
 
 class SelectCircles(GridLayout):
@@ -74,6 +77,7 @@ class SelectCircles(GridLayout):
     
     def clicked(self, instance):
         logging.info("GOING TO THE INDIVIDUAL CIRCLE EDITOR")
+        root.circle = instance.text
         self.screen_manager.current = "Next Page"
 
 

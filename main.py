@@ -2,6 +2,7 @@ import logging
 import os
 from datetime import date
 from openpyxl import load_workbook
+import api
 from api import EditAPI
 from api import SelectCircles
 from api import IndividualEdit
@@ -24,7 +25,8 @@ class ReportGenerator(App):
     def build(self):
 
         # Initializing a screen manager
-        self.screen_manager = ScreenManager()  
+        self.screen_manager = ScreenManager()
+        api.root = self.screen_manager
         
         # Adding select circles(Main page) to the screen_manager
         self.select_circles_page = SelectCircles(screen_manager=self.screen_manager)
