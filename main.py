@@ -7,7 +7,7 @@ from api import EditAPI
 from api import SelectCircles
 from api import IndividualEdit
 from kivy.app import App
-from kivy.uix.screenmanager import Screen, ScreenManager
+from kivy.uix.screenmanager import Screen, ScreenManager, FadeTransition
 from kivy.core.window import Window
 
 
@@ -25,7 +25,7 @@ class ReportGenerator(App):
     def build(self):
 
         # Initializing a screen manager
-        self.screen_manager = ScreenManager()
+        self.screen_manager = ScreenManager(transition=FadeTransition())
         api.root = self.screen_manager
         
         # Adding select circles(Main page) to the screen_manager

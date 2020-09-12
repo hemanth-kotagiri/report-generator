@@ -3,6 +3,7 @@ from datetime import time
 from datetime import date
 from openpyxl import load_workbook
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
@@ -12,6 +13,8 @@ class IndividualEdit(GridLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.cols = 2
+        self.padding = 40
+        self.spacing = 20
 
         # Initializing all the sheets
 
@@ -31,13 +34,21 @@ class IndividualEdit(GridLayout):
             "Circle 11": self.sheet11_editor
         }
 
-        # Updating date for sheet 6
-        b = Button(text = "Update Date")
-        b.bind(on_press = self.update_date)
-        self.add_widget(b)
+        # Go back Button
+        back_button = Button(text="Go Back")
+        back_button.bind(on_press=self.go_back)
+        self.add_widget(back_button)
+
+        # Button to update the date
+        update_date_button = Button(text = "Update Date")
+        update_date_button.bind(on_press = self.update_date)
+        self.add_widget(update_date_button)
     
     def update_date(self, instance):
         self.sheet_editors[root.circle].update_date(instance)
+    
+    def go_back(self, instance):
+        root.current = "Main Page"
 
 
 class SelectCircles(GridLayout):
@@ -110,6 +121,8 @@ class EditAPI:
         self.date_updated = True
         logging.info("DATE UPDATED SUCCESSFULLY")
         self.workbook.save(self.workbook_name)
+    
+
 
 
 
