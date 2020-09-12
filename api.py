@@ -12,7 +12,7 @@ class IndividualEdit(GridLayout):
     """ The next page to edit individual sheets """
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.cols = 2
+        self.cols = 1
         self.padding = 40
         self.spacing = 20
 
@@ -34,15 +34,20 @@ class IndividualEdit(GridLayout):
             "Circle 11": self.sheet11_editor
         }
 
+        # Implementing a box layout to pack both Update and back buttons in one row.
+        Back_And_Update_Buttons = BoxLayout()
+
         # Go back Button
         back_button = Button(text="Go Back")
         back_button.bind(on_press=self.go_back)
-        self.add_widget(back_button)
+        Back_And_Update_Buttons.add_widget(back_button)
 
         # Button to update the date
         update_date_button = Button(text = "Update Date")
         update_date_button.bind(on_press = self.update_date)
-        self.add_widget(update_date_button)
+        Back_And_Update_Buttons.add_widget(update_date_button)
+
+        self.add_widget(Back_And_Update_Buttons)
     
     def update_date(self, instance):
         self.sheet_editors[root.circle].update_date(instance)
