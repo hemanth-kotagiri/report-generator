@@ -22,6 +22,15 @@ class IndividualEdit(GridLayout):
         self.sheet10_editor = EditAPI("4-08-2020 (2).xlsx", "Circle 10")
         self.sheet11_editor = EditAPI("4-08-2020 (2).xlsx", "Circle 11")
 
+        sheet_editors = {
+            "Circle 6": self.sheet6_editor,
+            "Circle 7": self.sheet7_editor,
+            "Circle 8": self.sheet8_editor,
+            "Circle 9": self.sheet9_editor,
+            "Circle 10": self.sheet10_editor,
+            "Circle 11": self.sheet11_editor
+        }
+
         # Updating date for sheet 6
         b = Button(text = "Update Date")
         b.bind(on_press = self.sheet6_editor.update_date)
