@@ -13,8 +13,8 @@ class IndividualEdit(GridLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.cols = 1
-        self.padding = 40
-        self.spacing = 20
+        self.padding =20 
+        self.spacing = 50
 
         # Initializing all the sheets
 
@@ -34,26 +34,145 @@ class IndividualEdit(GridLayout):
             "Circle 11": self.sheet11_editor
         }
 
-        # Implementing a box layout to pack both Update and back buttons in one row.
-        Back_And_Update_Buttons = BoxLayout()
-
-        # Go back Button
-        back_button = Button(text="Go Back")
-        back_button.bind(on_press=self.go_back)
-        Back_And_Update_Buttons.add_widget(back_button)
-
-        # Button to update the date
-        update_date_button = Button(text = "Update Date")
-        update_date_button.bind(on_press = self.update_date)
-        Back_And_Update_Buttons.add_widget(update_date_button)
-
-        self.add_widget(Back_And_Update_Buttons)
     
     def update_date(self, instance):
         self.sheet_editors[root.circle].update_date(instance)
     
     def go_back(self, instance):
         root.current = "Main Page"
+    
+    def on_pre_enter(self, *args):
+        self.clear_widgets()
+
+        self.vmf_name = []
+        self.pfm_1_km = []
+        self.pfm_2_km = []
+        self.vmf_km = []
+        self.pfm_1_area = []
+        self.pfm_2_area = []
+        self.vmf_area = []
+
+        for i in range(5, 12):
+            # PFM-1 Input fields
+            try:
+                if len(self.sheet_editors[root.circle].sheet["B" + str(i)].value.split("-")) == 1: continue
+
+                if self.sheet_editors[root.circle].sheet["B" + str(i)].value.split("-")[1].isnumeric() or self.sheet_editors[root.circle].sheet["B" + str(i)].value == "Complaint Machine":
+                    row = BoxLayout(orientation="vertical", size_hint_y=None)
+                    pfm_1_layout = BoxLayout()
+                    pfm_2_layout = BoxLayout()
+                    vmf_layout = BoxLayout()
+
+                    divison_label = Label(text=self.sheet_editors[root.circle].sheet["B" + str(i)].value or "", color=(0,0,0,1))
+                    self.add_widget(divison_label)
+
+                    pfm1_info_label = Label(text="PFM-1", size_hint_x=None, width=20, bold=True, color=(0,0,0,1))
+                    pfm_1_layout.add_widget(pfm1_info_label)
+
+                    pfm2_info_label = Label(text="PFM-2", size_hint_x=None, width=20, bold=True, color=(0,0,0,1))
+                    pfm_2_layout.add_widget(pfm2_info_label)
+
+                    vmf_info_label = Label(text="VMF   ", size_hint_x=None, width=20, bold=True, color=(0,0,0,1))
+                    vmf_layout.add_widget(vmf_info_label)
+
+                    name_mobile_label = Label(text=self.sheet_editors[root.circle].sheet["C" + str(i)].value or "")
+                    pfm_1_layout.add_widget(name_mobile_label)
+
+                    name_mobile_label_2 = Label(text=self.sheet_editors[root.circle].sheet["F" + str(i)].value or "")
+                    pfm_2_layout.add_widget(name_mobile_label_2)
+
+                    vmf_name_in = TextInput(text="Name", multiline=False, width = 5)
+                    self.vmf_name.append(vmf_name_in)
+                    vmf_layout.add_widget(vmf_name_in)
+
+                    km_input = TextInput(text="KM", multiline=False, width=20)
+                    self.pfm_1_km.append(km_input)
+                    pfm_1_layout.add_widget(km_input)
+
+                    km_input_2 = TextInput(text="KM", multiline=False, width=20)
+                    self.pfm_2_km.append(km_input_2)
+                    pfm_2_layout.add_widget(km_input_2)
+
+                    vmf_km_in = TextInput(text="KM", multiline=False, width=20)
+                    self.vmf_km.append(vmf_km_in)
+                    vmf_layout.add_widget(vmf_km_in)
+
+                    area_input = TextInput(text="Areas Covered", multiline=False, width=20)
+                    self.pfm_1_area.append(area_input)
+                    pfm_1_layout.add_widget(area_input)
+
+                    area_input_2 = TextInput(text="Areas Covered", multiline=False, width=20)
+                    self.pfm_2_area.append(area_input_2)
+                    pfm_2_layout.add_widget(area_input_2)
+
+                    vmf_area = TextInput(text="Area", multiline=False, width=20)
+                    self.vmf_area.append(vmf_area)
+                    vmf_layout.add_widget(vmf_area)
+
+                    row.add_widget(pfm_1_layout)
+                    row.add_widget(pfm_2_layout)
+                    row.add_widget(vmf_layout)
+                    self.add_widget(row)
+                    self.my_rows.append([pfm_1_layout, pfm_2_layout, vmf_layout])
+                else:
+                    continue
+            except Exception:
+                continue
+        
+        
+
+    def on_parent(self, *args):
+        self.parent.bind(on_pre_enter=self.on_pre_enter)
+    
+    def update_all(self, instance):
+        # Updating the KM values for PFM
+
+        for i in range(len(self.pfm_1_km)):
+            self.sheet_editors[root.circle].sheet["D" + str(i + 5)].value = self.check_string_km(self.pfm_1_km[i].text)
+        for i in range(len(self.pfm_2_km)):
+            self.sheet_editors[root.circle].sheet["G" + str(i + 5)].value = self.check_string_km(self.pfm_2_km[i].text)
+        
+        # Updating the Areas covered for PFMs
+
+        for i in range(len(self.pfm_1_area)):
+            self.sheet_editors[root.circle].sheet["E" + str(i + 5)].value = self.check_area(self.pfm_1_area[i].text)
+        
+        for i in range(len(self.pfm_2_area)):
+            self.sheet_editors[root.circle].sheet["H" + str(i + 5)].value = self.check_area(self.pfm_2_area[i].text)
+        
+        for i in range(len(self.vmf_km)):
+            self.sheet_editors[root.circle].sheet["J" + str(i + 5)].value = self.check_string_km(self.vmf_km[i].text)
+        
+        for i in range(len(self.vmf_name)):
+            self.sheet_editors[root.circle].sheet["I" + str(i + 5)].value = self.check_vmf_name(self.vmf_name[i].text)
+        
+        for i in range(len(self.vmf_area)):
+            self.sheet_editors[root.circle].sheet["K" + str(i + 5)].value = self.check_vmf_area(self.vmf_area[i].text)
+
+        
+        self.sheet_editors[root.circle].update_date(instance)
+    
+    def check_string_km(self, s):
+        if s.strip("KM"):
+            return float(s.strip("KM"))
+        else:
+            return 0
+    
+    def check_area(self, s):
+        if s == "Areas Covered" or "Areas" in s or "Covered" in s:
+            return ""
+        else:
+            return s
+    
+    def check_vmf_area(self, s):
+        if s != "Area":
+            return s
+        return ""
+    
+    def check_vmf_name(self, s):
+        if s != "Name":
+            return s
+        return ""
 
 
 class SelectCircles(GridLayout):
@@ -125,7 +244,7 @@ class EditAPI:
 
         self.date_updated = True
         logging.info("DATE UPDATED SUCCESSFULLY")
-        self.workbook.save(self.workbook_name)
+        self.workbook.save(today + "(2).xlsx")
     
 
 
