@@ -6,71 +6,66 @@ import api
 from api import EditAPI
 from api import SelectCircles
 from api import IndividualEdit
+from api import InfoLabel, AreaInput, CircleButton
 from kivy.app import App
-from kivy.uix.screenmanager import Screen, ScreenManager, FadeTransition
 from kivy.core.window import Window
-from kivy.uix.scrollview import ScrollView
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
+from kivy.lang import Builder
+
+KV = """
+<InfoLabel>:
+    size_hint_x: None
+    width: 20
+    bold: True
+    color: 0,0,0,1
+
+<AreaInput>:
+    multiline: False
+    width: 20
+
+<CircleButton>:
+    on_release:
+        self.parent.clicked(self)
+    size_hint: .5, .5
+    font_size: "20sp"
+    background_color: 177/255, 126/255, 5/255, 1
 
 
+ScreenManager:
+    Screen:
+        name: "Main Page"
+        SelectCircles:
+            sm: root
+    Screen:
+        on_pre_enter:
+            ie.on_pre_enter()
+        name: "Next Page"
+        BoxLayout:
+            orientation: "vertical"
+            BoxLayout:
+                size_hint_y: .2
+                Button:
+                    text: "Go Back"
+                    on_release:
+                        ie.go_back()
+                Button:
+                    text: "Update All"
+                    on_release:
+                        ie.update_all()
+            ScrollView:
+                size_hint: 1, 0.8
+                IndividualEdit:
+                    id: ie
+                    sm: root
+"""
 
 Window.clearcolor = (135/255,206/255,235/255,1)
-class MyScreen(Screen):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        root = BoxLayout(orientation="vertical")
- 
-        self.individualedit = IndividualEdit(cols=1, spacing=10, size_hint_y=None)
- 
-        Back_And_Update_Buttons = BoxLayout(size_hint_y=0.2)
-        back_button = Button(text="Go Back")
-        back_button.bind(on_press=self.individualedit.go_back)
-        Back_And_Update_Buttons.add_widget(back_button)
-
-        update_date_button = Button(text = "Update All")
-        update_date_button.bind(on_press = self.individualedit.update_all)
-        Back_And_Update_Buttons.add_widget(update_date_button)
-        
-        root.add_widget(Back_And_Update_Buttons)
-        
-        # Make sure the height is such that there is something to scroll.
-        self.individualedit.bind(minimum_height=self.individualedit.setter('height'))
-        scroll = ScrollView(size_hint=(1, 0.8))
-        scroll.add_widget(self.individualedit)
-        
-        root.add_widget(scroll)
-        self.add_widget(root)
-    
-
-    def on_pre_enter(self, *args):
-        self.individualedit.on_pre_enter()
-
 
 class ReportGenerator(App):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
 
     def build(self):
-
-        # Initializing a screen manager
-        self.screen_manager = ScreenManager()
-        api.root = self.screen_manager
-        
-        # Adding select circles(Main page) to the screen_manager
-        self.select_circles_page = SelectCircles()
-        screen = Screen(name="Main Page")
-        screen.add_widget(self.select_circles_page)
-        self.screen_manager.add_widget(screen)
-
-        # Adding Individual editing Screen to the screen_manager
-        screen = MyScreen(name="Next Page")
-        self.screen_manager.add_widget(screen)
-
-        return self.screen_manager
+        return Builder.load_string(KV)
 
 
 if __name__ == "__main__":
-    Application = ReportGenerator()
-    Application.run()
+    Application = ReportGenerator
+    Application().run()
