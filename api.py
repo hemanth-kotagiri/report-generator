@@ -132,7 +132,7 @@ class IndividualEdit(GridLayout):
         for i in range(len(self.pfm_2_km)):
             self.sheet_editors[root.circle].sheet["G" + str(i + 5)].value = self.check_string_km(self.pfm_2_km[i].text)
         
-        # Updating the Areas covered for PFMs
+        # Updating the Areas covered for PFMs and VMFs
 
         for i in range(len(self.pfm_1_area)):
             self.sheet_editors[root.circle].sheet["E" + str(i + 5)].value = self.check_area(self.pfm_1_area[i].text)
@@ -176,10 +176,9 @@ class IndividualEdit(GridLayout):
 
 
 class SelectCircles(GridLayout):
-    def __init__(self, screen_manager, *kwargs):
+    def __init__(self, *kwargs):
         """ Opening Page of the App """
         super().__init__()
-        self.screen_manager = screen_manager
         self.cols = 1
         self.spacing = 10
         self.padding = 40
@@ -213,7 +212,7 @@ class SelectCircles(GridLayout):
     def clicked(self, instance):
         logging.info("GOING TO THE INDIVIDUAL CIRCLE EDITOR")
         root.circle = instance.text
-        self.screen_manager.current = "Next Page"
+        root.current = "Next Page"
 
 
 class EditAPI:
