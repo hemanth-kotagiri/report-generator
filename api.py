@@ -1,4 +1,5 @@
 import logging
+import os
 from datetime import time
 from datetime import date
 from openpyxl import load_workbook
@@ -7,6 +8,12 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
+
+from android.storage import primary_external_storage_path                      
+primary_ext_storage = primary_external_storage_path()
+from android.permissions import request_permissions, Permission                
+request_permissions([Permission.WRITE_EXTERNAL_STORAGE])
+
 
 class IndividualEdit(GridLayout):
     """ The next page to edit individual sheets """
@@ -51,6 +58,7 @@ class IndividualEdit(GridLayout):
         self.pfm_1_area = []
         self.pfm_2_area = []
         self.vmf_area = []
+        self.my_rows = []
 
         for i in range(5, 12):
             # PFM-1 Input fields
@@ -58,10 +66,10 @@ class IndividualEdit(GridLayout):
                 if len(self.sheet_editors[root.circle].sheet["B" + str(i)].value.split("-")) == 1: continue
 
                 if self.sheet_editors[root.circle].sheet["B" + str(i)].value.split("-")[1].isnumeric() or self.sheet_editors[root.circle].sheet["B" + str(i)].value == "Complaint Machine":
-                    row = BoxLayout(orientation="vertical", size_hint_y=None)
-                    pfm_1_layout = BoxLayout()
-                    pfm_2_layout = BoxLayout()
-                    vmf_layout = BoxLayout()
+                    row = BoxLayout(orientation="vertical", size_hint_y=None, height=350)
+                    pfm_1_layout = BoxLayout(size_hint_y=1)
+                    pfm_2_layout = BoxLayout(size_hint_y=1)
+                    vmf_layout = BoxLayout(size_hint_y=1)
 
                     divison_label = Label(text=self.sheet_editors[root.circle].sheet["B" + str(i)].value or "", color=(0,0,0,1))
                     self.add_widget(divison_label)
@@ -116,9 +124,8 @@ class IndividualEdit(GridLayout):
                     self.my_rows.append([pfm_1_layout, pfm_2_layout, vmf_layout])
                 else:
                     continue
-            except Exception:
-                continue
-        
+            except Exception as e:
+                logging.info(e)
         
 
     def on_parent(self, *args):
@@ -243,7 +250,8 @@ class EditAPI:
 
         self.date_updated = True
         logging.info("DATE UPDATED SUCCESSFULLY")
-        self.workbook.save(today + "(2).xlsx")
+        filename = os.path.join(primary_ext_storage, today + "(2).xlsx")
+        self.workbook.save(filename)
     
 
 

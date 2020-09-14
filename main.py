@@ -15,9 +15,6 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 
 
-#TODO: Add this inside the API
-# Loading the workbook from the current directory
-workbook = load_workbook(os.path.join(os.getcwd(), "4-08-2020 (2).xlsx"))
 
 Window.clearcolor = (135/255,206/255,235/255,1)
 class MyScreen(Screen):
