@@ -55,6 +55,8 @@ ScreenManager:
                 size_hint: 1, 0.8
                 IndividualEdit:
                     id: ie
+                    size_hint_y: None
+                    height: self.minimum_height
                     sm: root
 """
 
