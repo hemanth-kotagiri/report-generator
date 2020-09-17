@@ -3,7 +3,7 @@
 To run the app in your desktop, please install the packages required by choosing the requirements file
 as per your operating system.
 
-ofcourse, you'd need python to run this application: [Download](https://www.python.org/)
+ofcourse, you'd need python to run this application: <a href="http://python.org/" target="_blank">Download</a>
 
 `pip install -r [YOUR OS SPECIFIC REQUIREMENTS FILE]`
 
@@ -11,5 +11,5 @@ ofcourse, you'd need python to run this application: [Download](https://www.pyth
 
 ### Contributors:
 
-[El3phanten](https://github.com/el3) - This project wouldn't be completed without his collaboration.
+<a href="https://github.com/el3" target="_blank">El3phanten</a> - This project wouldn't be completed without his collaboration.
 A huge shoutout to him!
