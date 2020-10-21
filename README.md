@@ -13,3 +13,9 @@ ofcourse, you'd need python to run this application: <a href="http://python.org/
 
 <a href="https://github.com/el3" target="_blank">El3phanten</a> - This project wouldn't be completed without his collaboration.
 A huge shoutout to him!
+
+---
+
+©️ Hemanth Kotagiri
+
+Licensed under the [MIT License](LICENSE).
